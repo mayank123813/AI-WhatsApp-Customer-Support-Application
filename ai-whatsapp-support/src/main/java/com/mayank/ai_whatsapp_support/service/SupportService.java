@@ -2,6 +2,7 @@ package com.mayank.ai_whatsapp_support.service;
 
 import com.mayank.ai_whatsapp_support.entity.CustomerMessageEntity;
 import com.mayank.ai_whatsapp_support.model.CustomerMessage;
+import com.mayank.ai_whatsapp_support.model.CustomerMessageResponse;
 import com.mayank.ai_whatsapp_support.repository.CustomerMessageRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,28 @@ public class SupportService {
         this.customerMessageRepository=customerMessageRepository;
     }
 
-    public String processMessage(CustomerMessageEntity message) {
+    public CustomerMessageResponse processMessage(CustomerMessage message) {
 
 
         if (message.getMessage() == null ||
                 message.getMessage().trim().isEmpty()) {
 
-            return "Please enter a message.";
+            return new CustomerMessageResponse(
+                    "Please enter a message.",
+                    null,
+                    "FAILED"
+            );
         }
-        CustomerMessageEntity savedMessage=customerMessageRepository.save(message);
+        CustomerMessageEntity entity = new CustomerMessageEntity();
+        entity.setPhoneNumber(message.getPhoneNumber());
+        entity.setMessage(message.getMessage());
 
-        return "Your message has been received: "
-                + message.getMessage();
+        CustomerMessageEntity savedMessage=customerMessageRepository.save(entity);
+
+        return  new CustomerMessageResponse(
+                "Message saved successfully",
+                savedMessage.getId(),
+                "SUCCESS"
+        );
     }
 }

@@ -4,7 +4,7 @@ package com.mayank.ai_whatsapp_support.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer_messages")
+@Table(name = "customer")
 public class CustomerEntity {
 
     @Id

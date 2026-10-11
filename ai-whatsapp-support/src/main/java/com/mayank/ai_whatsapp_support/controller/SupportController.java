@@ -2,6 +2,7 @@ package com.mayank.ai_whatsapp_support.controller;
 
 import com.mayank.ai_whatsapp_support.entity.CustomerMessageEntity;
 import com.mayank.ai_whatsapp_support.model.CustomerMessage;
+import com.mayank.ai_whatsapp_support.model.CustomerMessageResponse;
 import com.mayank.ai_whatsapp_support.service.SupportService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class SupportController {
         return "return customer ai support system";
     }
     @PostMapping("/message")
-    public String receiveMessage(@RequestBody CustomerMessageEntity message){
+    public CustomerMessageResponse receiveMessage(@RequestBody CustomerMessage message){
         return supportService.processMessage(message);
     }
 
